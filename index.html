@@ -1,115 +1,109 @@
 <!doctype html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#17151d">
-  <meta name="description" content="Please Explain, Miguel — a ridiculous twenty-questions mystery game.">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17121d">
   <title>Please Explain, Miguel</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="site-shell">
+  <div class="grain"></div>
+  <main class="app">
     <header class="topbar">
-      <a class="wordmark" href="./" aria-label="Please Explain, Miguel home">PEM<span>!</span></a>
-      <span class="topbar-note">A VERY SERIOUS GUESSING GAME</span>
-      <button class="sound-button" id="sound-toggle" type="button" aria-pressed="false">SOUND: OFF</button>
+      <a class="wordmark" href="#" id="homeLink">PEM<span>!</span></a>
+      <div class="top-meta"><span class="tiny-dot"></span> A VERY SERIOUS GAME</div>
+      <button class="sound-btn" id="soundToggle" aria-label="효과음 토글">♫ <span>OFF</span></button>
     </header>
 
-    <main>
-      <section class="hero" id="home">
-        <div class="hero-copy">
-          <p class="eyebrow">THE WORLD'S LEAST RELIABLE DETECTIVE</p>
-          <h1>Please Explain,<br><em>Miguel</em><span class="title-dot">.</span></h1>
-          <p class="hero-description">스무고개가 이렇게까지 어려울 일인가요?<br>미겔이 설명하고, 다니엘이 참습니다.</p>
-          <button class="primary-button" id="start-button" type="button">START INVESTIGATION <span>↗</span></button>
-          <p class="tiny-note">20 QUESTIONS. ZERO GUARANTEE OF LOGIC.</p>
+    <section id="titleScreen" class="screen title-screen active">
+      <div class="title-copy">
+        <p class="eyebrow">A QUESTIONABLE MYSTERY GAME</p>
+        <h1>Please Explain,<br><em>Miguel.</em></h1>
+        <p class="intro">세상에서 가장 자신만만한 남자와<br>세상에서 가장 참을성 없는 추리의 만남.</p>
+        <button class="primary-btn" id="startBtn">게임 시작 <span>↗</span></button>
+        <p class="microcopy">20 QUESTIONS. ONE VERY CONFIDENT IDIOT.</p>
+      </div>
+      <div class="title-art">
+        <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+        <div class="sticker sticker-top">GENIUS<br>AT WORK</div>
+        <div class="hero-card miguel-card">
+          <div class="avatar miguel-avatar"><span>Ｍ</span><i>✦</i></div>
+          <div class="character-label"><b>MIGUEL</b><small>자칭 천재 / 출제자</small></div>
         </div>
-        <div class="hero-art" aria-label="Character introduction">
-          <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
-          <div class="character-card miguel-card">
-            <div class="portrait portrait-miguel"><span>?</span></div>
-            <div class="character-label"><b>MIGUEL</b><small>THE SELF-PROCLAIMED GENIUS</small></div>
-            <span class="sticker">100% GENIUS*</span>
+        <div class="hero-card daniel-card">
+          <div class="avatar daniel-avatar"><span>Ｄ</span><i>!</i></div>
+          <div class="character-label"><b>DANIEL</b><small>자칭 절세미녀 / 플레이어</small></div>
+        </div>
+        <div class="scribble">???</div>
+      </div>
+      <footer class="title-footer"><span>EST. QUESTIONABLE LOGIC</span><span>VOL. 01 — THE UMBRELLA INCIDENT</span></footer>
+    </section>
+
+    <section id="gameScreen" class="screen game-screen">
+      <div class="game-heading">
+        <div><p class="eyebrow">CASE FILE 001</p><h2>자, 맞혀 보시지!</h2></div>
+        <div class="counter"><strong id="questionCount">00</strong><span>/ 20<br>QUESTIONS</span></div>
+      </div>
+      <div class="game-layout">
+        <aside class="cast-column">
+          <div class="portrait-panel miguel-panel">
+            <div class="portrait portrait-miguel"><span>Ｍ</span><b>✦</b></div>
+            <div class="portrait-caption"><b>미겔</b><small>문제 출제자</small></div>
+            <span class="speech-tag">“나만 믿어!”</span>
           </div>
-          <div class="character-card daniel-card">
-            <div class="portrait portrait-daniel"><span>…</span></div>
-            <div class="character-label"><b>DANIEL</b><small>THE VERY PATIENT PLAYER</small></div>
+          <div class="portrait-panel daniel-panel">
+            <div class="portrait portrait-daniel"><span>Ｄ</span><b>!</b></div>
+            <div class="portrait-caption"><b>다니엘</b><small>추리 담당</small></div>
           </div>
-          <span class="asterisk-note">* self-evaluated</span>
-        </div>
-        <div class="hero-index">01 <span>—</span> WHO'S ASKING?</div>
-      </section>
+        </aside>
+        <section class="play-column">
+          <div class="dialogue-box">
+            <div class="dialogue-top"><span class="speaker" id="speakerName">MIGUEL</span><span class="dialogue-mark">✦</span></div>
+            <p id="dialogueText">후후… 드디어 내 지성을 시험할 때가 왔군! 질문은 스무 번까지 허락하지!</p>
+            <div class="dialogue-controls"><button id="nextDialogue" class="text-btn">계속 <span>→</span></button></div>
+          </div>
 
-      <section class="intro-strip">
-        <span class="strip-label">HOW TO PLAY</span>
-        <p>미겔이 떠올린 정답을 <b>20번의 질문 안에 맞혀보세요.</b><br>단, 미겔의 설명을 어디까지 믿을지는 당신의 몫입니다.</p>
-        <span class="strip-arrow">↓</span>
-      </section>
-
-      <section class="game-section" id="game">
-        <div class="section-heading">
-          <p class="eyebrow">CASE NO. 001</p>
-          <h2>So, what is it?</h2>
-          <p>미겔에게 질문하고 정답을 추리해 보세요.</p>
-        </div>
-
-        <div class="game-layout">
-          <aside class="speaker-panel">
-            <div class="speaker-portrait portrait-miguel"><span>?</span></div>
-            <p class="speaker-name">MIGUEL COTREEMAN</p>
-            <span class="speaker-role">YOUR QUESTION MASTER</span>
-            <div class="speech-bubble" id="miguel-line" aria-live="polite">하! 이 천재에게 맡겨두라고!</div>
-            <div class="question-counter"><span id="question-count">00</span><small>/ 20 QUESTIONS</small></div>
-          </aside>
-
-          <div class="play-panel">
-            <div class="panel-topline"><span>ASK A QUESTION</span><span id="case-status">INVESTIGATION IN PROGRESS</span></div>
-            <p class="instruction">아래 질문 중 하나를 골라 미겔에게 물어보세요.</p>
-            <div class="question-list" id="question-list">
-              <button class="question-button" data-question="indoor">이건 실내에서 주로 쓰는 물건이야?</button>
-              <button class="question-button" data-question="hand">한 손으로 들 수 있어?</button>
-              <button class="question-button" data-question="rain">비와 관련이 있어?</button>
-              <button class="question-button" data-question="electric">전기가 필요해?</button>
-              <button class="question-button" data-question="fold">접거나 펼칠 수 있어?</button>
-              <button class="question-button" data-question="wear">몸에 착용하는 물건이야?</button>
+          <div class="question-area">
+            <div class="section-head"><div><p class="eyebrow">ASK YOUR QUESTION</p><h3>무엇을 물어볼까?</h3></div><span class="pill">YES / NO</span></div>
+            <div class="question-grid" id="questionGrid">
+              <button class="question-btn" data-q="person">살아 있는 것인가?</button>
+              <button class="question-btn" data-q="indoors">실내에서 주로 쓰나?</button>
+              <button class="question-btn" data-q="hand">손으로 들 수 있나?</button>
+              <button class="question-btn" data-q="fold">접을 수 있나?</button>
+              <button class="question-btn" data-q="rain">비와 관련 있나?</button>
+              <button class="question-btn" data-q="electric">전기가 필요한가?</button>
+              <button class="question-btn" data-q="wear">몸에 착용하나?</button>
+              <button class="question-btn" data-q="eat">먹을 수 있나?</button>
+              <button class="question-btn" data-q="metal">금속으로 만들어졌나?</button>
+              <button class="question-btn" data-q="sound">소리가 나는 물건인가?</button>
             </div>
-            <div class="answer-area">
-              <label for="guess-input">I THINK IT IS...</label>
-              <div class="guess-row">
-                <input id="guess-input" type="text" placeholder="정답을 입력해 봐" autocomplete="off">
-                <button class="guess-button" id="guess-button" type="button">GUESS ↗</button>
-              </div>
-              <p class="feedback" id="feedback" aria-live="polite">정답을 모르겠다면 질문부터 해보세요.</p>
+            <div class="custom-question">
+              <input id="customQuestion" maxlength="70" placeholder="직접 질문을 입력해 봐… (답변은 미겔이 즉흥적으로!)">
+              <button id="customAsk">질문</button>
             </div>
           </div>
-        </div>
-      </section>
 
-      <section class="about-section">
-        <p class="eyebrow">A WORD FROM THE CAST</p>
-        <h2>Meet the <em>experts.</em></h2>
-        <div class="cast-grid">
-          <article class="cast-card">
-            <div class="cast-number">01 / THE TEACHER</div>
-            <div class="cast-avatar avatar-miguel">M</div>
-            <h3>Miguel</h3>
-            <p>잘생긴 얼굴과 훌륭한 체격. 그리고 그 모든 장점을 상쇄하는 지능.</p>
-            <span class="cast-quote">“내 설명은 완벽해!”</span>
-          </article>
-          <article class="cast-card">
-            <div class="cast-number">02 / THE STUDENT</div>
-            <div class="cast-avatar avatar-daniel">D</div>
-            <h3>Daniel</h3>
-            <p>자칭 절세미녀. 미겔의 말을 듣는 동안 인내심이 빠르게 소진된다.</p>
-            <span class="cast-quote">“……그게 설명이라고?”</span>
-          </article>
-        </div>
-      </section>
-    </main>
+          <div class="bottom-tools">
+            <div class="notes-box"><label for="notes">다니엘의 추리 메모</label><textarea id="notes" placeholder="수상한 점을 적어두자…"></textarea></div>
+            <div class="guess-box"><label for="guessInput">정답을 알고 있나?</label><div class="guess-row"><input id="guessInput" placeholder="정답 입력"><button id="guessBtn">확인</button></div><small>정답을 맞히면 즉시 사건 종료!</small></div>
+          </div>
+        </section>
+      </div>
+      <div class="game-footer"><button class="text-btn" id="giveUpBtn">포기하고 정답 보기</button><span>PLEASE THINK BEFORE YOU ASK.</span></div>
+    </section>
 
-    <footer><span>PLEASE EXPLAIN, MIGUEL</span><span>© 2026 — A QUESTIONABLE PRODUCTION</span></footer>
-  </div>
+    <section id="endingScreen" class="screen ending-screen">
+      <p class="eyebrow" id="endingEyebrow">CASE CLOSED</p>
+      <div class="ending-symbol" id="endingSymbol">✓</div>
+      <h2 id="endingTitle">정답이다!</h2>
+      <p id="endingText"></p>
+      <div class="answer-reveal">정답은 <strong>우산</strong>이었다.</div>
+      <button class="primary-btn" id="retryBtn">다시 도전하기 <span>↻</span></button>
+      <button class="text-btn" id="homeBtn">타이틀로 돌아가기</button>
+    </section>
+    <footer class="site-footer">PLEASE EXPLAIN, MIGUEL <span>© YOUR VERY OWN QUESTIONABLE DETECTIVE CLUB</span></footer>
+  </main>
   <script src="script.js"></script>
 </body>
 </html>
