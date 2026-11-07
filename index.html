@@ -1,109 +1,444 @@
-<!doctype html>
-<html lang="ko">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#17121d">
-  <title>Please Explain, Miguel</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <div class="grain"></div>
-  <main class="app">
-    <header class="topbar">
-      <a class="wordmark" href="#" id="homeLink">PEM<span>!</span></a>
-      <div class="top-meta"><span class="tiny-dot"></span> A VERY SERIOUS GAME</div>
-      <button class="sound-btn" id="soundToggle" aria-label="효과음 토글">♫ <span>OFF</span></button>
-    </header>
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Please Explain, Miguel!</title><style>
+:root{font-family:'Trebuchet MS','Malgun Gothic',sans-serif;color:#554b85;background:#e9e6ff}*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 10% 12%,#fff9d8 0 2%,transparent 2.2%),radial-gradient(circle at 88% 22%,#fff 0 1%,transparent 1.2%),linear-gradient(140deg,#e9ddff,#d8f2ff)}button,input,textarea,select{font:inherit}button{cursor:pointer;border:0;border-radius:18px;padding:12px 18px;background:#a995f4;color:white;font-weight:800;box-shadow:0 4px 0 #8070c1}button:hover{filter:brightness(1.06);transform:translateY(-1px)}button:disabled{opacity:.45;cursor:not-allowed}button.secondary{background:#8dcfff;color:#435c8d;box-shadow:0 4px 0 #68a7d6}button.yellow{background:#ffe77a;color:#685b88;box-shadow:0 4px 0 #e7c85c}input,textarea,select{width:100%;padding:13px;border:2px solid #cfc3fb;border-radius:15px;background:#fff;color:#4b4771}textarea{min-height:90px;resize:vertical}.app{max-width:1040px;margin:auto;padding:24px}.shell{border:4px solid #fff;border-radius:32px;padding:24px;background:#ffffffb9;box-shadow:0 18px 50px #7768ad33}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.logo{font-weight:1000;letter-spacing:.5px;color:#7963bc}.tag{background:#ffe77a;border-radius:99px;padding:7px 13px;font-size:13px}.center{text-align:center}.hero{padding:65px 12px}.hero h1{font-size:clamp(36px,7vw,68px);line-height:1.05;margin:14px 0;color:#8270d3;text-shadow:3px 3px #fff}.sub{color:#648ac3;font-weight:800}.scene{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0}.character{background:linear-gradient(#f8f5ff,#e7efff);border:3px solid white;border-radius:25px;padding:18px;min-height:180px;display:flex;flex-direction:column;align-items:center;justify-content:center}.face{font-size:66px}.character strong{font-size:20px}.expression{font-size:13px;color:#8a7eae}.bubble{background:white;border:3px solid #c8baf6;border-radius:24px;padding:20px;margin:15px 0;min-height:100px;line-height:1.65}.bubble strong{color:#8a6ad4}.panel{background:#f9f8ff;border-radius:24px;padding:18px;margin-top:16px}.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.row>*{flex:1}.question-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.question-grid button{font-size:14px;min-height:52px}.muted{color:#8e88ac;font-size:14px}.progress{height:13px;background:#e8e1fa;border-radius:20px;overflow:hidden}.progress>div{height:100%;background:linear-gradient(90deg,#a995f4,#8dcfff)}.history{max-height:190px;overflow:auto;background:white;border-radius:14px;padding:12px}.history p{margin:8px 0;border-bottom:1px dashed #e7defa;padding-bottom:7px}.hidden{display:none!important}.pill{border-radius:100px;background:#e9e3ff;padding:6px 11px;font-size:13px}.footer{text-align:center;margin-top:15px;font-size:12px;color:#7b79a5}@media(max-width:600px){.app{padding:10px}.shell{padding:14px}.question-grid{grid-template-columns:1fr}.scene{gap:8px}.character{min-height:140px;padding:8px}.face{font-size:48px}.row>*{flex-basis:100%}}
+.evidence-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:12px 0}.evidence-card{background:white;border:2px solid #d7ccfa;border-radius:14px;padding:12px;line-height:1.5}.evidence-card small{display:block;color:#8a80ac}.evidence-card strong{display:block;margin:4px 0}.investigation-result{margin-top:12px;padding:14px;background:#fff;border-radius:14px;white-space:pre-wrap;line-height:1.65;border:2px dashed #c8baf6}.evidence-empty{color:#807a9b;background:white;padding:15px;border-radius:14px}.evidence-card[data-kind="against"]{border-color:#e9a4bd}.evidence-card[data-kind="support"]{border-color:#9cd3bc}select{min-width:200px;flex:2!important}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #6754ae;outline-offset:2px}@media(max-width:600px){.evidence-list{grid-template-columns:1fr}}
+.custom-lore-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:8px 0}.custom-lore-row select{flex:1;min-width:130px}.custom-lore-row button{flex:0 0 auto}.custom-hyp-item{border:2px solid #d7ccfa;border-radius:14px;background:white;padding:12px;margin:8px 0}.custom-hyp-item[aria-current="true"]{border-color:#a995f4;background:#f3efff}.custom-link{border-left:4px solid #c6b7f7;padding:8px 12px;background:white;border-radius:9px;margin:6px 0}.custom-link[data-relation="against"]{border-color:#e9a4bd}.custom-link[data-relation="support"]{border-color:#9cd3bc}.custom-link small{display:block;color:#7e759a} .subheading{margin:12px 0 6px} .compact{font-size:13px;padding:9px 12px} .helptext{font-size:13px;color:#81799f} 
 
-    <section id="titleScreen" class="screen title-screen active">
-      <div class="title-copy">
-        <p class="eyebrow">A QUESTIONABLE MYSTERY GAME</p>
-        <h1>Please Explain,<br><em>Miguel.</em></h1>
-        <p class="intro">세상에서 가장 자신만만한 남자와<br>세상에서 가장 참을성 없는 추리의 만남.</p>
-        <button class="primary-btn" id="startBtn">게임 시작 <span>↗</span></button>
-        <p class="microcopy">20 QUESTIONS. ONE VERY CONFIDENT IDIOT.</p>
-      </div>
-      <div class="title-art">
-        <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
-        <div class="sticker sticker-top">GENIUS<br>AT WORK</div>
-        <div class="hero-card miguel-card">
-          <div class="avatar miguel-avatar"><span>Ｍ</span><i>✦</i></div>
-          <div class="character-label"><b>MIGUEL</b><small>자칭 천재 / 출제자</small></div>
-        </div>
-        <div class="hero-card daniel-card">
-          <div class="avatar daniel-avatar"><span>Ｄ</span><i>!</i></div>
-          <div class="character-label"><b>DANIEL</b><small>자칭 절세미녀 / 플레이어</small></div>
-        </div>
-        <div class="scribble">???</div>
-      </div>
-      <footer class="title-footer"><span>EST. QUESTIONABLE LOGIC</span><span>VOL. 01 — THE UMBRELLA INCIDENT</span></footer>
-    </section>
+/* v0.13 · responsive comic acting. Motion is disabled when the OS requests reduced motion. */
+.character{position:relative;isolation:isolate;transition:background-color .18s,border-color .18s,box-shadow .18s}
+.character .face{display:inline-block;transform-origin:50% 85%;line-height:1.2;will-change:transform}
+.character.is-speaking{border-color:#d5c2ff;box-shadow:0 0 0 3px #eae0ff inset}
+.character.is-speaking::before{content:"♪";position:absolute;top:7px;right:13px;color:#9576d7;font-weight:900}
+.character[data-mood="panic"]{background:linear-gradient(145deg,#fff0f2,#f5eaff)}
+.character[data-mood="angry"]{background:linear-gradient(145deg,#fff0eb,#f5edff)}
+.character[data-mood="smug"]{background:linear-gradient(145deg,#fff9db,#ece8ff)}
+.character[data-mood="shock"]{background:linear-gradient(145deg,#e7f8ff,#f4eaff)}
+.bubble{position:relative;white-space:pre-line;overflow-wrap:anywhere;transition:border-color .2s,background .2s}
+.bubble::after{content:"";position:absolute;bottom:-12px;left:32px;width:17px;height:17px;background:inherit;border-right:3px solid currentColor;border-bottom:3px solid currentColor;transform:rotate(45deg);color:#c8baf6}
+.bubble[data-tone="panic"]{border-color:#f3a3b6;background:#fff5f7;color:#66415d}
+.bubble[data-tone="panic"]::after{color:#f3a3b6}
+.bubble[data-tone="angry"]{border-color:#ffa78d;background:#fff7f0;color:#704b54}
+.bubble[data-tone="angry"]::after{color:#ffa78d}
+.bubble[data-tone="smug"]{border-color:#e8c66a;background:#fffdf0}
+.bubble[data-tone="smug"]::after{color:#e8c66a}
+.bubble[data-tone="shock"]{border-color:#89c9f2;background:#f1faff}
+.bubble[data-tone="shock"]::after{color:#89c9f2}
+.comic-caption{display:inline-flex;gap:6px;align-items:center;margin:0 0 8px;font-weight:900;font-size:12px;letter-spacing:.06em;color:#856ac6}
+.comic-caption[hidden]{display:none}
+@keyframes comic-pop{0%{transform:scale(.83) rotate(-7deg)}65%{transform:scale(1.16) rotate(4deg)}100%{transform:scale(1) rotate(0)}}
+@keyframes comic-wobble{0%,100%{transform:rotate(0)}25%{transform:rotate(-9deg)}60%{transform:rotate(8deg)}}
+@keyframes comic-jolt{0%,100%{transform:translateX(0)}20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
+@keyframes comic-bubble{from{opacity:.45;transform:translateY(8px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+.character.act-pop .face{animation:comic-pop .48s ease-out}
+.character.act-wobble .face{animation:comic-wobble .52s ease-in-out}
+.character.act-jolt .face{animation:comic-jolt .4s ease-out}
+.bubble.act-bubble{animation:comic-bubble .32s ease-out}
+.scene.act-shake{animation:comic-jolt .35s ease-out}
+@media(max-width:600px){.bubble{padding:14px 16px;line-height:1.55}.character.is-speaking::before{top:4px;right:6px}.character .face{font-size:clamp(34px,11vw,48px)}}
+@media(prefers-reduced-motion:reduce){.character,.bubble{transition:none!important}.character .face,.scene,.bubble{animation:none!important}}
+</style><style> .timeline-list{list-style:none;padding:0 0 0 12px;margin:18px 0 4px;border-left:3px solid #c9b7ff}.timeline-event{position:relative;margin:0 0 12px 14px;background:#fff;border:1px solid #e0d7f5;border-radius:13px;padding:11px 13px;overflow-wrap:anywhere}.timeline-event:before{content:"";position:absolute;left:-23px;top:17px;width:11px;height:11px;border-radius:50%;background:#a995f4;border:3px solid #fff;box-shadow:0 0 0 1px #a995f4}.timeline-event[data-type="evidence"]:before{background:#8dcfff;box-shadow:0 0 0 1px #8dcfff}.timeline-event[data-type="analysis"]:before{background:#f3bf69;box-shadow:0 0 0 1px #f3bf69}.timeline-meta{font-size:12px;color:#746b91;margin-bottom:5px}.timeline-event strong{display:block;margin-bottom:4px}.timeline-event p{white-space:pre-wrap;margin:0;line-height:1.5}.timeline-empty{color:#746b91;padding:12px}.timeline-list[hidden]{display:none}.investigation-result{white-space:pre-wrap;overflow-wrap:anywhere}#endingReport{max-height:420px;overflow:auto}#reportPreview{max-height:360px;overflow:auto}</style><style>
+.evaluation-card{background:#fff;border:2px solid #cbb9f5;border-radius:16px;padding:16px;white-space:pre-wrap;line-height:1.75}.evaluation-grade{font-size:34px;font-weight:900;color:#7251b7}.evaluation-dialogue{margin-top:12px;padding:14px;border-radius:14px;background:#f3efff;line-height:1.8;white-space:pre-wrap}.evaluation-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px;margin-top:10px}.evaluation-metric{border:1px solid #e0d6f6;border-radius:10px;padding:10px;background:#faf8ff}.evaluation-metric strong{display:block;font-size:18px}.evaluation-metric small{color:#70688a}
+</style><style>
+.comedy-secret{margin-top:10px;background:#fff4cc;border:2px dashed #e9c769;border-radius:14px;padding:11px 14px;white-space:pre-wrap;line-height:1.65}
+.comedy-guide{background:#fff9df;border-radius:13px;padding:12px;margin-top:10px;font-size:14px;line-height:1.6}
+#secretCount{font-weight:800;color:#8266c7}
+</style></head><body><main class="app"><div class="shell"><header class="top"><span class="logo">✦ PLEASE EXPLAIN, MIGUEL ♡</span><span class="tag" id="status">SODA POP · v0.13 ★</span></header><section id="title" class="hero center"><div style="font-size:48px">💜 ✦ 💙</div><h1>Please Explain,<br>Miguel!</h1><p class="sub">천재인 척하는 바보와 화가 많은 바보의 대환장 스무고개</p><p>질문은 스무 번! 사건은 황당해도 정답에는 반드시 이유가 있어요.</p><div class="row" style="max-width:420px;margin:28px auto"><button onclick="start(false)">START ✦</button><button class="secondary" onclick="showCollection()">COLLECTION ♡</button></div><p class="muted">진행 기록과 클리어 기록은 이 브라우저에 저장됩니다.</p></section><section id="game" class="hidden"><div class="top" style="margin-top:18px"><h2 id="puzzleTitle">문제</h2><span class="pill" id="counter">질문 0 / 20</span></div><div class="progress"><div id="bar" style="width:0%"></div></div><div class="scene"><div class="character"><div class="face" id="miguelFace">😏</div><strong>2P 미겔</strong><span class="expression" id="miguelMood">자신만만</span></div><div class="character"><div class="face" id="danielFace">🤨</div><strong>2P 다니엘라</strong><span class="expression" id="danielMood">의심</span></div></div><div class="bubble"><strong id="speaker">미겔</strong><div id="dialogue"></div></div><div class="panel"><h3>✦ 질문하기</h3><div class="comedy-guide">🎭 사건은 우스워도 정답은 논리적으로! 엉뚱한 질문에도 특별한 대답이 숨어 있어요. <span id="secretCount">숨은 대화 0개 발견</span></div><div id="suggestions" class="question-grid"></div><div class="row" style="margin-top:12px"><input id="customQuestion" maxlength="150" placeholder="직접 질문을 입력하세요 (예: 그 사람은 혼자였어?)"><button onclick="askCustom()" style="flex:0 0 auto">질문!</button></div><p class="muted">자유 질문은 핵심 표현을 인식해 답변합니다. 인식하지 못한 질문에도 횟수가 소모됩니다.</p></div><div class="panel"><h3>✎ 다니엘라의 추리 메모</h3><textarea id="memo" placeholder="단서와 추리를 자유롭게 기록하세요..." oninput="save()"></textarea><h3>📖 질문 기록</h3><div id="history" class="history"></div></div><div class="panel" id="investigationPanel"><div class="top"><h3>🧠 다니엘라의 대충 적은 메모판</h3><span class="pill" id="evidenceCount">증거 0개</span></div><p class="muted">질문 답변에서 확인된 사실을 자동으로 수집합니다. 가설을 선택한 뒤 검증하면 단서의 지지·반박·미확정을 비교할 수 있어요. 가설 검증은 질문 횟수를 소모하지 않습니다.</p><div id="evidenceList" class="evidence-list" aria-live="polite"></div><div class="row" style="margin-top:12px"><select id="hypothesis" aria-label="검증할 가설"></select><button class="yellow" type="button" onclick="checkHypothesis()" style="flex:0 0 auto">가설 검증</button></div><div class="panel" id="customHypothesisPanel" style="background:#efebff"><h3>✍️ 아무 말 대잔치 가설장</h3><p class="muted">직접 가설을 쓰고, 수집한 단서를 연결해 지지/반박 관계를 판단하세요. 이 연결은 플레이어의 추론이며 게임의 공식 정답 판정과는 별개입니다.</p><div class="row"><input id="newHypothesis" maxlength="120" placeholder="나만의 가설을 작성하세요 (최대 120자)" aria-label="새 가설"><button type="button" class="yellow" onclick="addCustomHypothesis()" style="flex:0 0 auto">가설 추가</button></div><div id="customHypothesisList" aria-live="polite"></div><div id="customHypothesisEditor" class="hidden"><h4 class="subheading">🔗 단서 연결</h4><p class="helptext">먼저 질문을 통해 확보한 단서만 연결할 수 있습니다. 연결 관계는 직접 선택합니다.</p><div class="custom-lore-row"><select id="customEvidence" aria-label="연결할 단서"></select><select id="customRelation" aria-label="연결 방향"><option value="support">가설 지지</option><option value="against">가설 반박</option><option value="neutral">참고 단서</option></select><button class="secondary compact" type="button" onclick="linkCustomEvidence()">연결</button></div><div id="customLinks"></div><div class="row" style="margin-top:10px"><button type="button" class="yellow" onclick="analyzeCustomHypothesis()">모순 분석하기</button><button type="button" class="secondary" onclick="deleteCustomHypothesis()">선택 가설 삭제</button></div><div id="customAnalysis" class="investigation-result" role="status" aria-live="polite">단서를 연결하고 분석해 보세요.</div></div></div><div id="hypothesisResult" class="investigation-result" role="status" aria-live="polite">아직 검증한 가설이 없어요.</div><div class="row" style="margin-top:12px"><button class="secondary" type="button" onclick="toggleEvidenceFilter()" id="filterBtn">전체 단서 보기</button><button class="secondary" type="button" onclick="copyInvestigation()">수사 기록 복사</button></div><p class="muted">단서는 이 문제의 미리 검증된 규칙에서만 생성됩니다. 미겔의 농담이나 불명확한 답변은 확정 증거로 취급하지 않아요.</p></div><div class="panel" id="timelinePanel"><div class="top"><h3>🕰 대체 어디서부터 망했나</h3><span class="pill" id="timelineCount">기록 0개</span></div><p class="muted">질문 → 단서 확보 → 가설 작성 → 증거 연결 → 모순 분석을 순서대로 되짚어 봅니다. 새 기록은 이 브라우저에 저장됩니다.</p><div class="row"><select id="timelineFilter" aria-label="타임라인 종류 필터"><option value="all">전체 기록</option><option value="question">질문</option><option value="evidence">단서</option><option value="hypothesis">가설</option><option value="link">증거 연결</option><option value="analysis">모순 분석·검증</option><option value="result">결과</option></select><button class="secondary" type="button" onclick="copyTimeline()">타임라인 복사</button></div><ol id="timelineList" class="timeline-list" aria-live="polite"></ol><p class="muted" id="timelineLegacyNote"></p></div><div class="panel" id="reportPanel"><div class="top"><h3>📋 오늘의 대환장 사건 기록</h3><span class="pill" id="reportStatus">수사 중</span></div><p class="muted">확인한 단서와 가설을 근거별로 정리합니다. 자유 가설의 지지·반박은 플레이어가 연결한 판단이며 자동 진위 판정이 아닙니다.</p><div id="reportPreview" class="investigation-result" aria-live="polite"></div><div class="row" style="margin-top:12px"><button class="secondary" type="button" onclick="copyCaseReport()">리포트 복사</button></div></div><div class="panel" id="evaluationPreviewPanel"><div class="top"><h3>🏅 오늘의 바보 지수</h3><span class="pill" id="evaluationPreviewBadge">수사 중</span></div><p class="muted">질문 효율, 단서 발견률, 가설 검증을 평가합니다. 최종 등급은 정답 제출 후 확정됩니다.</p><div id="evaluationPreview" class="investigation-result" aria-live="polite"></div></div><div class="panel"><h3>★ 정답 제출</h3><div class="row"><input id="answer" placeholder="정답을 입력하세요"><button class="yellow" onclick="submitAnswer()">이게 정답이라고?!</button></div><p class="muted">정답 제출은 질문 횟수를 소모하지 않지만, 틀리면 오답 엔딩으로 이동합니다.</p></div><div class="row" style="margin-top:18px"><button class="secondary" onclick="home()">타이틀로</button><button class="secondary" onclick="restart()">이 문제 다시 시작</button></div></section><section id="ending" class="hero center hidden"><div id="endingIcon" style="font-size:65px">🌟</div><h1 id="endingTitle">정답!</h1><div class="bubble" id="endingText"></div><div class="panel" style="text-align:left;margin:20px 0"><h3>🏅 최종 바보 판정</h3><div id="endingEvaluation" class="evaluation-card" aria-live="polite"></div><div id="evaluationDialogue" class="evaluation-dialogue" aria-live="polite"></div></div><div class="panel" style="text-align:left;margin:20px 0"><h3>📋 사건 종료 · 사고 보고서</h3><div id="endingReport" class="investigation-result" aria-live="polite"></div><div class="row" style="margin-top:12px"><button class="secondary" type="button" onclick="copyCaseReport()">결과 리포트 복사</button></div></div><div class="row" style="max-width:520px;margin:auto"><button id="nextBtn" onclick="nextPuzzle()">다음 문제 ✦</button><button class="secondary" onclick="restart()">다시 도전</button><button class="yellow" onclick="home()">타이틀</button></div></section><section id="collection" class="hero center hidden"><h1>COLLECTION ♡</h1><p id="collectionText"></p><div id="bonus" class="bubble"></div><button onclick="home()">타이틀로 돌아가기</button></section></div><div class="footer">✦ 팬메이드 게임 프로토타입 · 캐릭터 초상은 임시 이모지로 표시됩니다 ✦ <span style="padding:0 7px">·</span><a href="CHARACTER_LORE.md" target="_blank" rel="noopener" style="color:#7963bc;font-weight:800">📖 캐릭터 설정집</a></div></main><script>
+const puzzles=[{"title":"EP.01 미겔은 왜 경찰을 불렀나","intro":"긴급 신고했어요~! 제 얼굴이 사라졌거든요! 아아, 세상이 제 아름다움을 잃었어요!! ♡","answer":["거울에 김이 서렸다","거울에 김","거울이 뿌옇","거울에 습기","김 서린 거울","거울이 흐려"],"success":"미겔: \"에엑! 샤워하고 나온 제 거울에 김이 서린 거였다고요?! 그럼 범인은 수증기군요! 체포하세요!!\"\n다니엘라: \"……그걸 신고한 거예요? 경찰한테 사과부터 해요, 미친놈아.\"","fail":"미겔: \"범인은 수증기였답니다~! 제 얼굴을 지우다니, 중범죄예요!\"\n다니엘라: \"……다음엔 거울부터 닦아요. 진짜로.\"","options":["거울을 보고 있었어요?","샤워 직후였어요?","얼굴이 실제로 다쳤어요?","거울이 뿌옇게 변했어요?"],"rules":[{"keys":["거울","비친","반사"],"reply":"네네~! 분명 거울 앞에 섰는데 제 미모가 안 보였다니까요?!","m":"😭","d":"😑"},{"keys":["샤워","목욕","뜨거","욕실"],"reply":"샤워 직후였죠~♪ 뜨거운 물은 제 피부에 좋은 걸요!","m":"✨","d":"😒"},{"keys":["다쳤","상처","얼굴","몸","아파"],"reply":"제 얼굴은 멀쩡해요! 다쳤으면 제가 이렇게 침착하겠어요?! 으아앙!","m":"😱","d":"🙄"},{"keys":["김","습기","뿌옇","흐려","수증기","닦"],"reply":"거울이 하얗게 흐렸어요~. 제가 닦으니까 제 얼굴이 다시 나타났죠! 기적이에요♡","m":"🥹","d":"🤦‍♀️"}]},{"title":"EP.02 다니엘라의 완벽한 알리바이","intro":"레온하르트가 제 과자를 훔쳐 먹었어요~! 그런데 현장에는 범인이 남긴 치명적인 증거가 있죠. 뭘까요? ♬","answer":["과자 부스러기","부스러기","입가에 과자","입에 과자","입 주변에 부스러기"],"success":"다니엘라: \"……입가에 부스러기요? 젠장. 그걸 왜 이제 말해요.\"\n미겔: \"아하하~♡ 범인의 입이 증거품이었네요! 압수할까요?\"\n다니엘라: \"손대면 부러뜨립니다.\"","fail":"미겔: \"레온하르트 입가에 과자 부스러기가 잔뜩 붙어 있었답니다~!\"\n다니엘라: \"……그걸 좀 빨리 말하라고요.\"","options":["다니엘라가 과자를 먹었어요?","포장지가 뜯겨 있었어요?","다니엘라 입가에 뭐가 묻었어요?","다른 사람이 방에 있었어요?"],"rules":[{"keys":["다니엘라","먹었","먹은","범인"],"reply":"레온하르트는 \"안 먹었어요, 씨발\"이라고 했죠~. 근데 지금도 우물거려요!","m":"😇","d":"😤"},{"keys":["포장","봉지","뜯"],"reply":"봉지는 찢어져 있고 과자는 사라졌답니다~. 제 마음도 찢어졌고요!","m":"💔","d":"😑"},{"keys":["입","묻","부스러","가루","얼굴"],"reply":"레온하르트 입가에 과자 부스러기가 잔뜩 붙었어요~. 범인이 꽤 뻔뻔하네요♡","m":"😏","d":"😳"},{"keys":["다른","사람","방","누구"],"reply":"그 방엔 저랑 레온하르트 둘뿐이었어요. 제 과자는 혼자 걸어갈 수 없잖아요~?","m":"🙂","d":"😒"}]},{"title":"EP.03 사라진 미겔의 그림자","intro":"으아아앙! 한낮인데 제 그림자가 발밑에서 사라졌어요~! 누가 제 그림자까지 질투한 거죠?! ♡","answer":["그늘에 들어갔다","그늘 안에","건물 그림자","큰 그림자 안","그늘로 이동","그늘에 있었다"],"success":"미겔: \"아! 커다란 건물 그늘에 들어가서 제 그림자가 안 보였던 거군요!\"\n다니엘라: \"……그림자도 당신이랑 같이 있기 싫었나 보죠.\"\n미겔: \"레온하르트~! 너무해요오!!\"","fail":"미겔: \"건물 그늘 안에 들어갔을 뿐이었답니다~♪\"\n다니엘라: \"……그림자한테 사과하세요. 괜히 실종 신고당했으니까.\"","options":["태양은 떠 있었어요?","실내에 들어갔어요?","커다란 건물 그늘에 있었어요?","그림자가 실제로 없어졌어요?"],"rules":[{"keys":["태양","해","낮","날씨"],"reply":"네! 한낮이고 해는 쨍쨍했어요~. 제 피부가 탈까 봐 걱정됐죠!","m":"🌞","d":"😐"},{"keys":["실내","집","안으로"],"reply":"건물 안으로 들어간 건 아니에요~. 저는 계속 바깥에 있었어요!","m":"🙂","d":"🤔"},{"keys":["그늘","건물","큰 그림자","벽"],"reply":"아, 맞다! 커다란 건물 그림자 안에 서 있었어요~. 시원해서 좋았는데!","m":"😳","d":"🤦‍♀️"},{"keys":["실제","사라","발밑","바닥","보이"],"reply":"그림자를 누가 훔친 건 아니에요~. 밝은 바닥에선 다시 보였답니다!","m":"😏","d":"😑"}]}];
+const key='please-explain-miguel-v1';let state={index:0,count:0,history:[],memo:'',cleared:[],active:false};try{const stored=JSON.parse(localStorage.getItem(key));if(stored&&Array.isArray(stored.cleared))state={...state,...stored,active:false}}catch(e){}const $=id=>document.getElementById(id);function save(){state.memo=$('memo').value;localStorage.setItem(key,JSON.stringify(state))}function view(id){for(const x of ['title','game','ending','collection'])$(x).classList.toggle('hidden',x!==id)}function home(){state.active=false;save();view('title')}function start(resume=false){if(!resume){state.index=0;state.count=0;state.history=[];state.memo=''}state.active=true;save();render();view('game')}function restart(){state.count=0;state.history=[];state.memo='';state.active=true;save();render();view('game')}function render(){const p=puzzles[state.index];$('puzzleTitle').textContent=p.title;$('counter').textContent=`질문 ${state.count} / 20`;$('bar').style.width=(state.count/20*100)+'%';$('dialogue').textContent=state.history.length?state.history.at(-1).reply:p.intro;$('speaker').textContent='미겔';$('miguelFace').textContent=state.history.length?state.history.at(-1).m:'😏';$('danielFace').textContent=state.history.length?state.history.at(-1).d:'🤨';$('miguelMood').textContent=state.history.length?'답변 중':'자신만만';$('danielMood').textContent=state.history.length?'추리 중':'의심';$('suggestions').replaceChildren();for(const q of p.options){const b=document.createElement('button');b.className='secondary';b.textContent=q;b.onclick=()=>ask(q);b.disabled=state.count>=20;$('suggestions').append(b)}$('memo').value=state.memo;$('history').replaceChildren();for(const h of state.history){const el=document.createElement('p');el.textContent=`Q${h.n}. 다니엘라: ${h.q}  /  미겔: ${h.reply}`;$('history').append(el)}$('customQuestion').disabled=state.count>=20;$('answer').value=''}function askCustom(){const q=$('customQuestion').value.trim();if(!q)return alert('질문을 입력해 주세요!');$('customQuestion').value='';ask(q)}function ask(q){if(state.count>=20)return;const p=puzzles[state.index];const rule=p.rules.find(r=>r.keys.some(k=>q.toLowerCase().includes(k)));const fallback=['흐응~ 그건 이 문제에서 중요하지 않을 수도 있는데요~?','어라~? 질문을 좀 더 구체적으로 해주시겠어요?','에~ 그 질문에는 확실하게 대답하기 어려운데요~?'];const reply=rule?rule.reply:fallback[state.count%fallback.length];state.count++;state.history.push({n:state.count,q,reply,m:rule?.m||'😏',d:rule?.d||'😕'});save();render();if(state.count>=20){$('dialogue').textContent='스무 번째 질문까지 끝났어요~! 자자, 이제 답을 내보시죠~♪';$('miguelFace').textContent='😈';$('danielFace').textContent='😤'}}function normalize(s){return s.toLowerCase().replace(/[\s.,!?~·]/g,'').replace(/(입니다|이에요|예요|거야|것이다|했어|했어요)$/,'')};function submitAnswer(){const a=$('answer').value.trim();if(!a)return alert('추리한 정답을 입력해 주세요!');const p=puzzles[state.index];const n=normalize(a);const ok=p.answer.some(x=>n.includes(normalize(x)));$('endingIcon').textContent=ok?'🌟':'💧';$('endingTitle').textContent=ok?'CORRECT! ♡':'WRONG! ☆';$('endingText').textContent=(ok?p.success:p.fail)+(ok?'\n다니엘라: “이 정도는 당연하지.”':'\n다니엘라: “다시 해. 이번엔 제대로 물을 테니까.”');if(ok&&!state.cleared.includes(state.index))state.cleared.push(state.index);state.active=false;save();$('nextBtn').classList.toggle('hidden',!ok||state.index===puzzles.length-1);view('ending')}function nextPuzzle(){if(state.index<puzzles.length-1){state.index++;restart()}else showCollection()}function showCollection(){const done=state.cleared.length;$('collectionText').textContent=`클리어한 문제: ${done} / ${puzzles.length}`;$('bonus').textContent=done===puzzles.length?'🔓 1P 보너스 콘텐츠 해금! (보너스 스토리 및 일러스트는 추후 추가 예정)':'🔒 모든 문제를 정답으로 클리어하면 1P 보너스 콘텐츠가 해금됩니다.';view('collection')}$('customQuestion').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();askCustom()}});$('answer').addEventListener('keydown',e=>{if(e.key==='Enter')submitAnswer()});
 
-    <section id="gameScreen" class="screen game-screen">
-      <div class="game-heading">
-        <div><p class="eyebrow">CASE FILE 001</p><h2>자, 맞혀 보시지!</h2></div>
-        <div class="counter"><strong id="questionCount">00</strong><span>/ 20<br>QUESTIONS</span></div>
-      </div>
-      <div class="game-layout">
-        <aside class="cast-column">
-          <div class="portrait-panel miguel-panel">
-            <div class="portrait portrait-miguel"><span>Ｍ</span><b>✦</b></div>
-            <div class="portrait-caption"><b>미겔</b><small>문제 출제자</small></div>
-            <span class="speech-tag">“나만 믿어!”</span>
-          </div>
-          <div class="portrait-panel daniel-panel">
-            <div class="portrait portrait-daniel"><span>Ｄ</span><b>!</b></div>
-            <div class="portrait-caption"><b>다니엘</b><small>추리 담당</small></div>
-          </div>
-        </aside>
-        <section class="play-column">
-          <div class="dialogue-box">
-            <div class="dialogue-top"><span class="speaker" id="speakerName">MIGUEL</span><span class="dialogue-mark">✦</span></div>
-            <p id="dialogueText">후후… 드디어 내 지성을 시험할 때가 왔군! 질문은 스무 번까지 허락하지!</p>
-            <div class="dialogue-controls"><button id="nextDialogue" class="text-btn">계속 <span>→</span></button></div>
-          </div>
+// v0.06: deterministic investigation board. Never infer evidence from unknown free-text questions.
+const caseFiles=[{"facts":[{"id":"mirror","label":"사건 장소","value":"거울 앞","source":"거울 질문"},{"id":"shower","label":"사건 직전","value":"뜨거운 물로 샤워함","source":"샤워 질문"},{"id":"unhurt","label":"미겔의 얼굴","value":"실제로는 멀쩡함","source":"상처 질문"},{"id":"fog","label":"거울 상태","value":"뿌옇고 닦으면 다시 보임","source":"습기 질문"}],"hypotheses":[{"id":"fog","name":"거울에 김이 서렸다","support":["mirror","shower","unhurt","fog"],"against":[]},{"id":"injury","name":"얼굴에 실제로 문제가 생겼다","support":[],"against":["unhurt"]},{"id":"stolen","name":"누군가 거울을 훔쳤다","support":[],"against":["mirror","fog"]}]},{"facts":[{"id":"denial","label":"다니엘라의 주장","value":"먹지 않았다고 부인함","source":"범인 질문"},{"id":"wrapper","label":"과자 봉지","value":"찢어져 있고 내용물이 사라짐","source":"봉지 질문"},{"id":"crumb","label":"입가의 흔적","value":"과자 부스러기가 묻어 있음","source":"입가 질문"},{"id":"alone","label":"방에 있던 사람","value":"미겔과 다니엘라뿐","source":"출입 질문"}],"hypotheses":[{"id":"crumb","name":"입가의 과자 부스러기가 증거다","support":["crumb","wrapper","alone"],"against":[]},{"id":"ghost","name":"귀신이 과자를 먹었다","support":[],"against":["crumb","alone"]},{"id":"untouched","name":"과자는 전혀 먹히지 않았다","support":[],"against":["wrapper"]}]},{"facts":[{"id":"sun","label":"날씨","value":"해가 뜬 한낮","source":"태양 질문"},{"id":"outside","label":"미겔의 위치","value":"계속 실외에 있었음","source":"실내 질문"},{"id":"shade","label":"주변 환경","value":"커다란 건물 그림자 안","source":"그늘 질문"},{"id":"returns","label":"그림자의 상태","value":"밝은 바닥에서 다시 보임","source":"실종 질문"}],"hypotheses":[{"id":"shade","name":"건물 그늘에 들어갔다","support":["sun","outside","shade","returns"],"against":[]},{"id":"inside","name":"실내에 들어가서 안 보였다","support":[],"against":["outside"]},{"id":"stolen","name":"그림자를 실제로 도둑맞았다","support":[],"against":["returns"]}]}];
+const ruleFacts=[["mirror", "shower", "unhurt", "fog"], ["denial", "wrapper", "crumb", "alone"], ["sun", "outside", "shade", "returns"]];
+let onlyConflicts=false;
+let investigationResult='';
+function ensureInvestigation(){
+ ensureCustomStore();
+ if(!Array.isArray(state.evidence))state.evidence=[];
+ if(typeof state.hypothesis!=='string')state.hypothesis='';
+ if(typeof state.investigationIndex!=='number')state.investigationIndex=state.index;
+ if(state.investigationIndex!==state.index){state.evidence=[];state.hypothesis='';state.investigationIndex=state.index;investigationResult='';}
+ const valid=caseFiles[state.index]?.facts.map(x=>x.id)||[];
+ state.evidence=[...new Set(state.evidence.filter(x=>valid.includes(x)))];
+}
+function renderInvestigation(){
+ ensureInvestigation();const c=caseFiles[state.index];if(!c)return;
+ const list=$('evidenceList');list.replaceChildren();
+ $('evidenceCount').textContent=`증거 ${state.evidence.length} / ${c.facts.length}개`;
+ const selected=c.hypotheses.find(h=>h.id===state.hypothesis);
+ let visible=c.facts.filter(f=>state.evidence.includes(f.id));
+ if(onlyConflicts&&selected)visible=visible.filter(f=>selected.against.includes(f.id));
+ if(!visible.length){const el=document.createElement('div');el.className='evidence-empty';el.textContent=onlyConflicts?'현재 선택한 가설과 충돌하는 확인된 단서가 없어요.':'아직 수집한 단서가 없어요. 질문을 해 보세요.';list.append(el)}
+ for(const f of visible){const el=document.createElement('article');const kind=selected?(selected.against.includes(f.id)?'against':selected.support.includes(f.id)?'support':'neutral'):'neutral';el.className='evidence-card';el.dataset.kind=kind;const small=document.createElement('small');small.textContent=`${f.source} · ${kind==='against'?'가설 반박':kind==='support'?'가설 지지':'확인된 사실'}`;const strong=document.createElement('strong');strong.textContent=f.label;const val=document.createElement('span');val.textContent=f.value;el.append(small,strong,val);list.append(el)}
+ const select=$('hypothesis');const current=state.hypothesis;select.replaceChildren();for(const h of c.hypotheses){const opt=document.createElement('option');opt.value=h.id;opt.textContent=h.name;select.append(opt)}
+ if(c.hypotheses.some(h=>h.id===current))select.value=current;else {state.hypothesis=c.hypotheses[0].id;select.value=state.hypothesis}
+ $('hypothesisResult').textContent=investigationResult||'가설을 고른 뒤 검증을 눌러 보세요. 단서가 없으면 판단을 보류합니다.';
+ $('filterBtn').textContent=onlyConflicts?'전체 단서 보기':'반박 단서만 보기';
+}
+function checkHypothesis(){ensureInvestigation();const c=caseFiles[state.index];state.hypothesis=$('hypothesis').value;const h=c.hypotheses.find(x=>x.id===state.hypothesis);if(!h)return;
+ const supports=h.support.filter(x=>state.evidence.includes(x));const against=h.against.filter(x=>state.evidence.includes(x));const unknown=c.facts.length-state.evidence.length;
+ const label=id=>c.facts.find(f=>f.id===id)?.label||id;
+ const verdict=against.length?'⚠ 확인된 단서와 충돌하는 가설입니다.':supports.length?'✓ 현재 단서가 지지하지만, 아직 확정 정답은 아닙니다.':'? 판단 보류: 이 가설을 평가할 증거가 부족합니다.';
+ investigationResult=`${h.name}\n${verdict}\n지지: ${supports.length? supports.map(label).join(', '):'없음'}\n반박: ${against.length?against.map(label).join(', '):'없음'}\n미확인 단서: ${unknown}개`;
+ save();renderInvestigation();
+}
+function toggleEvidenceFilter(){onlyConflicts=!onlyConflicts;renderInvestigation()}
+function copyInvestigation(){ensureInvestigation();const c=caseFiles[state.index];const facts=c.facts.filter(f=>state.evidence.includes(f.id)).map(f=>`- ${f.label}: ${f.value}`).join('\n');const custom=customExport();const content=`${puzzles[state.index].title}\n질문 ${state.count}/20\n[확인된 단서]\n${facts||'(없음)'}\n[검증]\n${investigationResult||'(미검증)'}\n[자유 가설]\n${custom}\n[메모]\n${state.memo||'(없음)'}`;
+ if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(content).then(()=>alert('수사 기록을 복사했어요!')).catch(()=>prompt('수사 기록을 복사해 주세요:',content))}else prompt('수사 기록을 복사해 주세요:',content);
+}
+const originalRender=render;render=function(){originalRender();renderInvestigation();renderCustomHypotheses()};
+const originalStart=start;start=function(resume=false){if(!resume){state.evidence=[];state.hypothesis='';state.investigationIndex=0;investigationResult='';onlyConflicts=false;}originalStart(resume)};
+const originalRestart=restart;restart=function(){state.evidence=[];state.hypothesis='';state.investigationIndex=state.index;investigationResult='';onlyConflicts=false;originalRestart()};
+const originalAsk=ask;ask=function(q){if(state.count>=20)return;ensureInvestigation();const p=puzzles[state.index];const index=p.rules.findIndex(r=>r.keys.some(k=>q.toLowerCase().includes(k)));if(index>=0){const id=ruleFacts[state.index]?.[index];if(id&&!state.evidence.includes(id))state.evidence.push(id)}originalAsk(q)};
+$('hypothesis').addEventListener('change',e=>{state.hypothesis=e.target.value;investigationResult='';save();renderInvestigation()});
 
-          <div class="question-area">
-            <div class="section-head"><div><p class="eyebrow">ASK YOUR QUESTION</p><h3>무엇을 물어볼까?</h3></div><span class="pill">YES / NO</span></div>
-            <div class="question-grid" id="questionGrid">
-              <button class="question-btn" data-q="person">살아 있는 것인가?</button>
-              <button class="question-btn" data-q="indoors">실내에서 주로 쓰나?</button>
-              <button class="question-btn" data-q="hand">손으로 들 수 있나?</button>
-              <button class="question-btn" data-q="fold">접을 수 있나?</button>
-              <button class="question-btn" data-q="rain">비와 관련 있나?</button>
-              <button class="question-btn" data-q="electric">전기가 필요한가?</button>
-              <button class="question-btn" data-q="wear">몸에 착용하나?</button>
-              <button class="question-btn" data-q="eat">먹을 수 있나?</button>
-              <button class="question-btn" data-q="metal">금속으로 만들어졌나?</button>
-              <button class="question-btn" data-q="sound">소리가 나는 물건인가?</button>
-            </div>
-            <div class="custom-question">
-              <input id="customQuestion" maxlength="70" placeholder="직접 질문을 입력해 봐… (답변은 미겔이 즉흥적으로!)">
-              <button id="customAsk">질문</button>
-            </div>
-          </div>
+// v0.07: user-authored hypotheses and user-assigned evidence links. No AI or inferred logical truth.
+let selectedCustomId='';
+function ensureCustomStore(){
+ if(!state.customHypotheses||typeof state.customHypotheses!=='object'||Array.isArray(state.customHypotheses))state.customHypotheses={};
+ const k=String(state.index);if(!Array.isArray(state.customHypotheses[k]))state.customHypotheses[k]=[];
+ state.customHypotheses[k]=state.customHypotheses[k].filter(h=>h&&typeof h.id==='string'&&typeof h.name==='string'&&Array.isArray(h.links)).slice(0,30);
+}
+function customList(){ensureCustomStore();return state.customHypotheses[String(state.index)]}
+function selectedCustom(){return customList().find(h=>h.id===selectedCustomId)}
+function addCustomHypothesis(){const input=$('newHypothesis');const name=input.value.trim();if(!name)return alert('가설을 입력해 주세요.');const list=customList();if(list.length>=30)return alert('에피소드당 최대 30개까지 작성할 수 있어요.');const id='h'+Date.now().toString(36)+Math.random().toString(36).slice(2,7);list.push({id,name:name.slice(0,120),links:[]});selectedCustomId=id;input.value='';save();renderCustomHypotheses()}
+function renderCustomHypotheses(){
+ const list=customList(),root=$('customHypothesisList');root.replaceChildren();
+ if(!list.length){const el=document.createElement('p');el.className='helptext';el.textContent='아직 직접 작성한 가설이 없어요.';root.append(el)}
+ for(const h of list){const el=document.createElement('div');el.className='custom-hyp-item';el.setAttribute('aria-current',String(h.id===selectedCustomId));const btn=document.createElement('button');btn.type='button';btn.className='secondary compact';btn.textContent=(h.id===selectedCustomId?'✓ ':'선택 · ')+h.name;btn.style.maxWidth='100%';btn.style.whiteSpace='normal';btn.onclick=()=>{selectedCustomId=h.id;renderCustomHypotheses()};const small=document.createElement('span');small.className='helptext';small.textContent=` 연결 ${h.links.length}개`;el.append(btn,small);root.append(el)}
+ const h=selectedCustom();$('customHypothesisEditor').classList.toggle('hidden',!h);if(!h)return;
+ const select=$('customEvidence'),previous=select.value;select.replaceChildren();const facts=caseFiles[state.index].facts.filter(f=>state.evidence.includes(f.id));for(const f of facts){const option=document.createElement('option');option.value=f.id;option.textContent=f.label+' — '+f.value;select.append(option)}if(facts.some(f=>f.id===previous))select.value=previous;
+ const links=$('customLinks');links.replaceChildren();if(!facts.length){const msg=document.createElement('p');msg.className='helptext';msg.textContent='아직 확인된 단서가 없어요. 질문을 먼저 해주세요.';links.append(msg)}
+ for(const l of h.links){const f=caseFiles[state.index].facts.find(x=>x.id===l.fact);if(!f)continue;const el=document.createElement('div');el.className='custom-link';el.dataset.relation=l.relation;const title=document.createElement('strong');title.textContent=`${l.relation==='support'?'✓ 지지':l.relation==='against'?'⚠ 반박':'· 참고'} · ${f.label}`;const desc=document.createElement('small');desc.textContent=f.value+(state.evidence.includes(l.fact)?'':' (현재 단서 미확인)');const remove=document.createElement('button');remove.className='secondary compact';remove.type='button';remove.textContent='연결 해제';remove.onclick=()=>{h.links=h.links.filter(x=>x.fact!==l.fact);save();renderCustomHypotheses()};el.append(title,desc,remove);links.append(el)}
+ const savedAnalysis=h.analysis;if(savedAnalysis)$('customAnalysis').textContent=savedAnalysis;else $('customAnalysis').textContent='단서를 연결하고 분석해 보세요.';
+}
+function linkCustomEvidence(){const h=selectedCustom();if(!h)return;const fact=$('customEvidence').value,relation=$('customRelation').value;if(!state.evidence.includes(fact))return alert('질문으로 확인한 단서만 연결할 수 있어요.');if(!['support','against','neutral'].includes(relation))return;h.links=h.links.filter(l=>l.fact!==fact);h.links.push({fact,relation});h.analysis='';save();renderCustomHypotheses()}
+function analyzeCustomHypothesis(){const h=selectedCustom();if(!h)return;const active=h.links.filter(l=>state.evidence.includes(l.fact));const support=active.filter(l=>l.relation==='support'),against=active.filter(l=>l.relation==='against'),neutral=active.filter(l=>l.relation==='neutral');const label=l=>caseFiles[state.index].facts.find(f=>f.id===l.fact)?.label||l.fact;const verdict=against.length?'⚠ 모순 후보: 플레이어가 반박으로 연결한 단서가 있습니다.':support.length?'✓ 잠정 지지: 플레이어가 지지로 연결한 단서가 있습니다.':'? 판단 보류: 연결된 지지/반박 단서가 없습니다.';h.analysis=`${h.name}\n${verdict}\n지지 ${support.length}개: ${support.map(label).join(', ')||'없음'}\n반박 ${against.length}개: ${against.map(label).join(', ')||'없음'}\n참고 ${neutral.length}개: ${neutral.map(label).join(', ')||'없음'}\n미연결 확인 단서: ${state.evidence.filter(id=>!active.some(l=>l.fact===id)).length}개\n※ 이 분석은 사용자가 지정한 연결을 집계하며 가설의 실제 참/거짓을 자동 추론하지 않습니다.`;save();renderCustomHypotheses()}
+function deleteCustomHypothesis(){const h=selectedCustom();if(!h||!confirm('이 가설과 연결된 단서를 삭제할까요?'))return;state.customHypotheses[String(state.index)]=customList().filter(x=>x.id!==h.id);selectedCustomId='';save();renderCustomHypotheses()}
+function customExport(){const list=customList();return list.length?list.map(h=>{const links=h.links.map(l=>{const f=caseFiles[state.index].facts.find(x=>x.id===l.fact);return `  - ${l.relation==='support'?'지지':l.relation==='against'?'반박':'참고'}: ${f?.label||l.fact}`}).join('\n');return `- ${h.name}\n${links||'  (연결 없음)'}\n${h.analysis||''}`}).join('\n'):'(없음)'}
+$('newHypothesis').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addCustomHypothesis()}});
 
-          <div class="bottom-tools">
-            <div class="notes-box"><label for="notes">다니엘의 추리 메모</label><textarea id="notes" placeholder="수상한 점을 적어두자…"></textarea></div>
-            <div class="guess-box"><label for="guessInput">정답을 알고 있나?</label><div class="guess-row"><input id="guessInput" placeholder="정답 입력"><button id="guessBtn">확인</button></div><small>정답을 맞히면 즉시 사건 종료!</small></div>
-          </div>
-        </section>
-      </div>
-      <div class="game-footer"><button class="text-btn" id="giveUpBtn">포기하고 정답 보기</button><span>PLEASE THINK BEFORE YOU ASK.</span></div>
-    </section>
+ensureInvestigation();
 
-    <section id="endingScreen" class="screen ending-screen">
-      <p class="eyebrow" id="endingEyebrow">CASE CLOSED</p>
-      <div class="ending-symbol" id="endingSymbol">✓</div>
-      <h2 id="endingTitle">정답이다!</h2>
-      <p id="endingText"></p>
-      <div class="answer-reveal">정답은 <strong>우산</strong>이었다.</div>
-      <button class="primary-btn" id="retryBtn">다시 도전하기 <span>↻</span></button>
-      <button class="text-btn" id="homeBtn">타이틀로 돌아가기</button>
-    </section>
-    <footer class="site-footer">PLEASE EXPLAIN, MIGUEL <span>© YOUR VERY OWN QUESTIONABLE DETECTIVE CLUB</span></footer>
-  </main>
-  <script src="script.js"></script>
-</body>
-</html>
+// v0.08: append-only, per-episode event timeline. Historical v0.07 events cannot be reconstructed reliably.
+const timelineTypes={question:'❔ 질문',evidence:'🔎 단서',hypothesis:'✍️ 가설',link:'🔗 증거 연결',analysis:'⚖️ 분석·검증',result:'🏁 결과'};
+function ensureTimeline(){
+ if(!state.timelineEvents||typeof state.timelineEvents!=='object'||Array.isArray(state.timelineEvents))state.timelineEvents={};
+ const k=String(state.index);if(!Array.isArray(state.timelineEvents[k]))state.timelineEvents[k]=[];
+ state.timelineEvents[k]=state.timelineEvents[k].filter(e=>e&&typeof e.type==='string'&&typeof e.title==='string'&&typeof e.detail==='string').slice(-500);
+ return state.timelineEvents[k];
+}
+function logTimeline(type,title,detail){const arr=ensureTimeline();arr.push({type,title:String(title).slice(0,160),detail:String(detail).slice(0,500),at:new Date().toISOString(),seq:(arr.at(-1)?.seq||0)+1});if(arr.length>500)arr.shift();save();renderTimeline()}
+function renderTimeline(){const all=ensureTimeline(),filter=$('timelineFilter').value,events=filter==='all'?all:all.filter(e=>e.type===filter);$('timelineCount').textContent=`기록 ${all.length}개`;
+ const root=$('timelineList');root.replaceChildren();if(!events.length){const li=document.createElement('li');li.className='timeline-empty';li.textContent=all.length?'이 유형의 기록은 아직 없어요.':'아직 기록이 없어요. 질문을 시작해 보세요.';root.append(li)}
+ for(const e of events){const li=document.createElement('li');li.className='timeline-event';li.dataset.type=e.type;const meta=document.createElement('div');meta.className='timeline-meta';const time=e.at?new Date(e.at).toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'}):'';meta.textContent=`#${e.seq||'?'} · ${timelineTypes[e.type]||e.type} · ${time}`;const h=document.createElement('strong');h.textContent=e.title;const d=document.createElement('p');d.textContent=e.detail;li.append(meta,h,d);root.append(li)}
+ $('timelineLegacyNote').textContent='v0.07 이전 플레이 기록은 시간 정보가 없어 소급 생성하지 않습니다. 새 행동부터 기록합니다.';
+}
+function copyTimeline(){const lines=ensureTimeline().map(e=>`#${e.seq||'?'} [${timelineTypes[e.type]||e.type}] ${e.title}\n${e.detail}`);const content=`${puzzles[state.index].title} — 추리 타임라인\n${lines.join('\n\n')||'(기록 없음)'}`;if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(content).then(()=>alert('타임라인을 복사했어요!')).catch(()=>prompt('복사해 주세요:',content));else prompt('복사해 주세요:',content)}
+$('timelineFilter').addEventListener('change',renderTimeline);
+const timelineRender=render;render=function(){timelineRender();renderTimeline()};
+const timelineAsk=ask;ask=function(q){const beforeCount=state.count,beforeEvidence=[...(Array.isArray(state.evidence)?state.evidence:[])];timelineAsk(q);if(state.count===beforeCount)return;const last=state.history.at(-1);logTimeline('question',`Q${state.count}. ${q}`,last?.reply||'답변 기록 없음');for(const id of state.evidence||[]){if(!beforeEvidence.includes(id)){const f=caseFiles[state.index]?.facts.find(x=>x.id===id);if(f)logTimeline('evidence',f.label,f.value)}}};
+const timelineAdd=addCustomHypothesis;addCustomHypothesis=function(){const before=customList().length;timelineAdd();const list=customList();if(list.length>before)logTimeline('hypothesis','새 가설 작성',list.at(-1).name)};
+const timelineLink=linkCustomEvidence;linkCustomEvidence=function(){const h=selectedCustom(),fact=$('customEvidence').value,relation=$('customRelation').value;if(!h||!state.evidence.includes(fact))return timelineLink();timelineLink();const f=caseFiles[state.index].facts.find(x=>x.id===fact);logTimeline('link',h.name,`${f?.label||fact} → ${relation==='support'?'지지':relation==='against'?'반박':'참고'}`)};
+const timelineAnalyze=analyzeCustomHypothesis;analyzeCustomHypothesis=function(){const h=selectedCustom();timelineAnalyze();if(h)logTimeline('analysis',`자유 가설 분석: ${h.name}`,h.analysis||'분석 결과 없음')};
+const timelineCheck=checkHypothesis;checkHypothesis=function(){timelineCheck();const h=caseFiles[state.index].hypotheses.find(x=>x.id===state.hypothesis);logTimeline('analysis',`기본 가설 검증: ${h?.name||'가설'}`,investigationResult||'검증 결과 없음')};
+const timelineDelete=deleteCustomHypothesis;deleteCustomHypothesis=function(){const h=selectedCustom(),id=h?.id,name=h?.name;timelineDelete();if(id&&!customList().some(x=>x.id===id))logTimeline('hypothesis','가설 삭제',name)};
+const timelineRestart=restart;restart=function(){if(state.timelineEvents)state.timelineEvents[String(state.index)]=[];timelineRestart();logTimeline('result','사건 재시작','새 수사 기록을 시작합니다.')};
+const timelineStart=start;start=function(resume=false){if(!resume){if(!state.timelineEvents)state.timelineEvents={};state.timelineEvents['0']=[];}timelineStart(resume);if(!resume)logTimeline('result','수사 시작',puzzles[state.index].title)};
+const timelineNext=nextPuzzle;nextPuzzle=function(){const prev=state.index;timelineNext();if(state.index!==prev){ensureTimeline();logTimeline('result','다음 사건 시작',puzzles[state.index].title)}};
+const timelineSubmit=submitAnswer;submitAnswer=function(){const answer=$('answer').value.trim();timelineSubmit();if(answer)logTimeline('result','정답 제출',`제출: ${answer} / ${$('endingTitle').textContent}`)};
+renderTimeline();
+
+
+// v0.09: deterministic case reports; original storage key and v0.08 timeline retained.
+function reportStore(){if(!state.caseReports||typeof state.caseReports!=='object'||Array.isArray(state.caseReports))state.caseReports={};return state.caseReports}
+function caseReportData(outcome=null,submitted=null){
+ ensureInvestigation();const c=caseFiles[state.index],evidence=Array.isArray(state.evidence)?state.evidence:[];
+ const facts=c.facts.filter(f=>evidence.includes(f.id));const basic=c.hypotheses.map(h=>({name:h.name,support:h.support.filter(id=>evidence.includes(id)).map(id=>c.facts.find(f=>f.id===id)?.label||id),against:h.against.filter(id=>evidence.includes(id)).map(id=>c.facts.find(f=>f.id===id)?.label||id)}));
+ const custom=customList().map(h=>({name:h.name,links:h.links.filter(l=>evidence.includes(l.fact)).map(l=>({label:c.facts.find(f=>f.id===l.fact)?.label||l.fact,relation:l.relation}))}));
+ const events=ensureTimeline();return {episode:state.index,title:puzzles[state.index].title,questions:state.count,limit:20,history:state.history.map(h=>({q:h.q,reply:h.reply})),facts:facts.map(f=>({label:f.label,value:f.value})),basic,custom,events:events.length,conflictEvents:events.filter(e=>e.type==='analysis').length,memo:state.memo||'',outcome,submitted,createdAt:new Date().toISOString()};
+}
+function formatCaseReport(r){if(!r)return '아직 수사 기록이 없습니다.';
+ const lines=[`📋 ${r.title}`,`상태: ${r.outcome===null?'수사 진행 중':r.outcome?'정답 · 사건 해결':'오답 · 사건 미해결'}`,`질문: ${r.questions}/${r.limit}회 · 확인 단서: ${r.facts.length}개`,r.submitted!==null?`제출한 정답: ${r.submitted}`:null,'','[확인된 단서]',...r.facts.map(f=>`• ${f.label}: ${f.value}`)];if(!r.facts.length)lines.push('• 아직 없음');
+ lines.push('','[기본 가설 검토]');for(const h of r.basic){lines.push(`• ${h.name}`,`  지지: ${h.support.join(', ')||'없음'}`,`  반박: ${h.against.join(', ')||'없음'}`,`  판단: ${h.against.length?'확인 단서와 충돌':h.support.length?'잠정 지지':'증거 부족'}`)}
+ lines.push('','[플레이어 자유 가설]');if(!r.custom.length)lines.push('• 작성된 가설 없음');for(const h of r.custom){const counts={support:0,against:0,neutral:0};h.links.forEach(l=>{if(l.relation in counts)counts[l.relation]++});lines.push(`• ${h.name} (지지 ${counts.support} / 반박 ${counts.against} / 참고 ${counts.neutral})`);for(const l of h.links)lines.push(`  - ${l.relation==='support'?'지지':l.relation==='against'?'반박':'참고'}: ${l.label}`);if(!h.links.length)lines.push('  - 연결된 확인 단서 없음')}
+ lines.push('','[수사 경과]',`• 타임라인 기록 ${r.events}개 · 검증/분석 행동 ${r.conflictEvents}회`,'','[다니엘라의 메모]',r.memo||'(없음)','','※ 기본 가설은 정해진 규칙과 확인 단서로 비교합니다. 자유 가설의 연결은 플레이어 판단이며 AI 자동 진위 판정이 아닙니다.');return lines.filter(x=>x!==null).join('\n');}
+function renderCaseReport(){const r=caseReportData();$('reportPreview').textContent=formatCaseReport(r);$('reportStatus').textContent=`단서 ${r.facts.length}개`}
+function copyCaseReport(){const stored=reportStore()[String(state.index)];const r=$('ending').classList.contains('hidden')?caseReportData():(stored||caseReportData());const content=formatCaseReport(r);if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(content).then(()=>alert('리포트를 복사했어요!')).catch(()=>prompt('복사해 주세요:',content));else prompt('복사해 주세요:',content)}
+const reportRender=render;render=function(){reportRender();renderCaseReport()};
+const reportSubmit=submitAnswer;submitAnswer=function(){const answer=$('answer').value.trim();if(!answer)return reportSubmit();reportSubmit();const outcome=$('endingTitle').textContent.startsWith('CORRECT');const report=caseReportData(outcome,answer);reportStore()[String(state.index)]=report;save();$('endingReport').textContent=formatCaseReport(report)};
+const reportRestart=restart;restart=function(){delete reportStore()[String(state.index)];reportRestart()};
+const reportStart=start;start=function(resume=false){if(!resume){delete reportStore()['0']}reportStart(resume)};
+renderCaseReport();
+
+
+// v0.10: reproducible, deterministic evaluation. No AI inference and no mutation of legacy scoring.
+function calculateEvaluation(outcome=null){
+ ensureInvestigation();
+ const facts=caseFiles[state.index].facts, found=new Set(state.evidence||[]);
+ const count=Math.max(0,Math.min(20,Number(state.count)||0));
+ // A correct answer is required for the highest tiers; questions used are rewarded conservatively.
+ const questionScore=count===0?0:Math.max(0,Math.round(25*(21-count)/20));
+ const discoveryScore=Math.round(35*found.size/Math.max(1,facts.length));
+ const basics=caseFiles[state.index].hypotheses;
+ const basicChecked=ensureTimeline().some(e=>e.type==='analysis'&&e.title.startsWith('기본 가설 검증:'));
+ const custom=customList();
+ const validLinks=custom.flatMap(h=>h.links||[]).filter(l=>found.has(l.fact)&&['support','against','neutral'].includes(l.relation));
+ const analyzed=ensureTimeline().some(e=>e.type==='analysis'&&e.title.startsWith('자유 가설 분석:'));
+ const hypothesisScore=(basicChecked?10:0)+(custom.length?5:0)+(validLinks.length?10:0)+(analyzed?15:0);
+ const processScore=questionScore+discoveryScore+hypothesisScore;
+ const solved=outcome===true;
+ const total=Math.min(100,Math.max(0,processScore+(solved?0:0)));
+ // Scores are transparent. Wrong answers cannot earn A/S, even with complete process points.
+ const grade=outcome===null?'진행 중':!solved?(total>=55?'C':'D'):(total>=90?'S':total>=75?'A':total>=55?'B':total>=35?'C':'D');
+ return {episode:state.index,questions:count,found:found.size,possible:facts.length,questionScore,discoveryScore,hypothesisScore,total,grade,outcome,checks:{basicChecked,customCount:custom.length,validLinks:validLinks.length,analyzed},createdAt:new Date().toISOString()};
+}
+function evaluationLines(r){return [
+ `질문 효율 ${r.questionScore}/25점 · ${r.questions}/20회 사용`,
+ `단서 발견률 ${r.discoveryScore}/35점 · ${r.found}/${r.possible}개 확인`,
+ `가설 검증 ${r.hypothesisScore}/40점 · 기본 검증 ${r.checks.basicChecked?'완료':'미완료'} / 자유 가설 ${r.checks.customCount}개 / 유효 연결 ${r.checks.validLinks}개 / 자유 분석 ${r.checks.analyzed?'완료':'미완료'}`,
+ `총점 ${r.total}/100점${r.outcome===false?' · 오답으로 등급 상한 C':''}`
+].join('\n')}
+function evaluationTalk(r){const rank=r.grade;const lines={
+ S:['미겔: "에에~?! 이건 좀 너무 잘하시는데요?! 제 천재적인 문제를 이렇게 쉽게~?! ♡"','다니엘라: "……당연하죠. 그쪽이 설명을 이상하게 했을 뿐인데요…."'],
+ A:['미겔: "흐응~ 제법이시네요~? 이번엔 인정해 드리죠! ♪"','다니엘라: "……다음엔 좀 덜 시끄럽게 설명해 보세요."'],
+ B:['미겔: "아하하! 아슬아슬했죠~? 그래도 맞혔으니까요~♡"','다니엘라: "……아, 피곤해. 다음 문제나 주세요…."'],
+ C:['미겔: "에~? 수사는 열심히 하셨는데요~? 조금 더 생각해 보시죠!"','다니엘라: "……아, 진짜. 이게 다 그쪽 설명 때문이라고요…."'],
+ D:['미겔: "어라~? 이대로 끝내실 건가요? 다시 해보시죠~♪"','다니엘라: "……시끄러워요. 다시 하면 되잖아요…."']};
+ return (lines[rank]||lines.C).join('\n\n')
+}
+function renderEvaluation(){
+ const r=calculateEvaluation();
+ const badge=$('evaluationPreviewBadge'), preview=$('evaluationPreview');
+ if(!badge||!preview)return;
+ badge.textContent=`${r.total}/100점 · 잠정`;
+ preview.textContent=evaluationLines(r)+'\n※ 제출 전에는 정답 여부가 반영되지 않습니다.';
+}
+function saveEvaluation(r){
+ if(!state.caseEvaluations||typeof state.caseEvaluations!=='object'||Array.isArray(state.caseEvaluations))state.caseEvaluations={};
+ state.caseEvaluations[String(state.index)]=r;
+ save();
+}
+const evaluationRender=render;render=function(){evaluationRender();renderEvaluation()};
+const evaluationSubmit=submitAnswer;submitAnswer=function(){
+ const a=$('answer').value.trim();if(!a)return evaluationSubmit();
+ evaluationSubmit();
+ const ok=$('endingTitle').textContent.startsWith('CORRECT');
+ const r=calculateEvaluation(ok);saveEvaluation(r);
+ $('endingEvaluation').replaceChildren();
+ const g=document.createElement('div');g.className='evaluation-grade';g.textContent=`${r.grade} RANK · ${r.total}/100`;
+ const d=document.createElement('div');d.textContent=evaluationLines(r);
+ $('endingEvaluation').append(g,d);
+ $('evaluationDialogue').textContent=evaluationTalk(r);
+ const stored=reportStore()[String(state.index)];
+ if(stored){stored.evaluation=r;stored.evaluationDialogue=evaluationTalk(r);save();$('endingReport').textContent=formatCaseReport(stored)+'\n\n[수사 평가]\n'+evaluationLines(r)}
+};
+const evaluationRestart=restart;restart=function(){if(state.caseEvaluations)delete state.caseEvaluations[String(state.index)];evaluationRestart()};
+const evaluationStart=start;start=function(resume=false){if(!resume&&state.caseEvaluations)delete state.caseEvaluations['0'];evaluationStart(resume)};
+renderEvaluation();
+
+
+// v0.11 comedy layer: only presentation and authored puzzle content; no migration of prior save data.
+const comedyReactions=[
+ ['다니엘라: "……지금 경찰이 아니라 걸레가 필요한 거 아니에요?"','다니엘라: "하. 그 잘난 얼굴이 물리 법칙을 이기진 못하죠."','다니엘라: "……신고 접수한 사람한테 미안하지도 않아요?"'],
+ ['다니엘라: "……저한테 불리한 질문은 취소할 수 없어요?"','다니엘라: "아, 씨발. 그 과자 맛있긴 했는데."','다니엘라: "……뭘 봐요. 증거부터 내놓으라고요."'],
+ ['다니엘라: "……당신 그림자도 퇴근할 권리가 있죠."','다니엘라: "태양한테 항의할 거면 혼자 하세요."','다니엘라: "……그림자랑 절교라도 하시든가."']
+];
+const comedyAsk=ask;
+ask=function(q){
+ const old=state.count;comedyAsk(q);
+ if(state.count===old)return;
+ const h=state.history[state.history.length-1];
+ if(!h)return;
+ const reaction=comedyReactions[state.index][(state.count-1)%3];
+ $('dialogue').textContent='미겔: '+h.reply+'\n'+reaction;
+ $('danielMood').textContent=['황당','분노','체념'][state.count%3];
+};
+const comedyRender=render;
+render=function(){comedyRender();if(state.count===0){$('dialogue').textContent='미겔: '+puzzles[state.index].intro+'\n다니엘라: "……이번엔 또 무슨 개소리예요."';}};
+const comedySubmit=submitAnswer;
+submitAnswer=function(){comedySubmit();if(!$('ending').classList.contains('hidden')){
+ const ok=$('endingTitle').textContent.startsWith('CORRECT');
+ $('endingTitle').textContent=ok?'이게 맞았다고?! ♡':'대환장 오답! ☆';
+ }};
+// Score labels are comedic; the underlying scoring algorithm and save structure stay unchanged.
+const oldEvalTalk=evaluationTalk;
+evaluationTalk=function(r){return oldEvalTalk(r)+'\n다니엘라: "……등급이 뭐든 이 사건은 다시 겪기 싫어요."';};
+const oldEvaluationLines=evaluationLines;
+evaluationLines=function(r){return oldEvaluationLines(r)+'\n※ 점수는 추리 활동을 기록하는 장난스러운 성적표입니다. 사람의 지능을 평가하지 않아요.';};
+
+
+// v0.12: original, deterministic comedy branches. Existing save key, episode rules,
+// evidence IDs, evaluation/report schemas and CHARACTER_LORE.md remain untouched.
+const v12SecretBranches=[
+ [
+  {id:'mirror-marriage',match:/결혼|약혼|연애|사귀|사랑/,miguel:'흐응~ 제 얼굴이 너무 아름다워서 거울이 청혼한 걸까요? ♡ 하지만 전 거울과 결혼할 생각 없어요. 재산 분할이 귀찮거든요~',daniela:'……거울도 선택권이 있어요. 거절했겠죠.'},
+  {id:'mirror-police',match:/경찰|신고|체포|수갑/,miguel:'경찰이요? 네네~ 제 얼굴 실종 신고를 접수했죠! 제 얼굴 사진을 달라길래 셀카를 83장 보냈답니다♪',daniela:'……업무 방해로 잡혀갈 사람은 당신인데.'},
+  {id:'mirror-blood',match:/피|살인|시체|죽|칼|폭력/,miguel:'피는 안 났어요~! 제 몸에 상처라도 났으면 지금쯤 도시 전체가 제 울음소리로 흔들렸겠죠! 으앙!',daniela:'……그건 이미 흔들리고 있어요. 제 고막이.'},
+  {id:'mirror-hair',match:/머리|가발|대머리|탈모/,miguel:'제 머리카락은 무사해요~! 한 올 빠진 걸 발견하면 장례식부터 치를 거니까요♡',daniela:'……머리카락이 아니라 제 인내심이 빠지고 있어요.'}
+ ],
+ [
+  {id:'cookie-love',match:/사랑|키스|연애|결혼|좋아/,miguel:'과자를 사랑했냐고요? 당연하죠~! 하지만 제 사랑은 제 자신에게 가장 먼저 돌아가야 해요♡',daniela:'……그럼 과자는 저한테 양보하시죠. 아니, 이미 늦었나.'},
+  {id:'cookie-teeth',match:/치아|이빨|충치|치과|양치/,miguel:'치과요?! 싫어요! 제 소중한 이가 아프면 어쩌려고요! 과자는 부드러웠으니 범인의 치아도 멀쩡할걸요~',daniela:'……제 입 좀 그만 쳐다봐요. 부스러기 떨어지잖아.'},
+  {id:'cookie-drink',match:/술|담배|맥주|와인|흡연/,miguel:'술이랑 담배요? 전 안 해요~. 제 아름다운 몸에 그런 걸 넣다니! 레온하르트는 하던데요?',daniela:'……과자 얘기하다가 왜 제 생활 습관을 폭로해요, 씨발.'},
+  {id:'cookie-cat',match:/고양이|개|강아지|동물/,miguel:'동물은 없었답니다~. 그런데 레온하르트가 과자 봉지를 찢는 소리는 맹수 같았어요♡',daniela:'……사람을 동물 취급하지 마세요. 아니, 그 과자 좀 더 없어요?'}
+ ],
+ [
+  {id:'shadow-vampire',match:/흡혈귀|뱀파이어|귀신|유령|악마/,miguel:'제가 뱀파이어일 리 없잖아요~! 햇빛 아래서 이 미모를 자랑할 기회를 왜 버리겠어요? ♪',daniela:'……흡혈귀도 당신 피는 안 마실걸요. 시끄러워서.'},
+  {id:'shadow-umbrella',match:/우산|양산|모자/,miguel:'양산은 없었어요~! 햇빛이 저를 너무 사랑해서 따라다니는 줄 알았는데, 제 그림자는 절 버렸어요!',daniela:'……건물 그늘에 들어갔다는 생각은 안 해봤어요?'},
+  {id:'shadow-hurt',match:/다쳤|아프|부상|상처|발/,miguel:'저 안 다쳤어요~! 발끝에 돌만 스쳐도 응급실을 부를 사람인데요? 으으, 상상만 해도 아파!',daniela:'……상상으로도 엄살을 부리는군요.'},
+  {id:'shadow-jealous',match:/질투|바람|다른 사람|배신/,miguel:'제 그림자가 다른 사람을 따라갔다고요?! 흥! 그럴 리 없어요. 절 두고 누굴 따라가겠어요~♡',daniela:'……제발 따라가 줬으면 좋겠는데.'}
+ ]
+];
+const v12GenericBranches=[
+ ['미겔: "에~? 지금 그 질문이요? 제 미모와 무슨 관계가 있는지부터 설명해 보시죠~♡"','다니엘라: "……그 얼굴에 모든 사건을 갖다 붙이지 마요."'],
+ ['미겔: "흐응~ 제 천재적인 두뇌는 이 질문을 잠시 보류하겠어요!"','다니엘라: "……모른다는 말을 이렇게 길게 하네."'],
+ ['미겔: "네네~! 대단한 질문이에요! 그런데 제가 대답할 수 있는 건 아무것도 없네요♪"','다니엘라: "……그럼 입을 왜 열었어요?"'],
+ ['미겔: "자자, 그 질문은 수사에 도움이 안 될 수도 있지만 제 기분에는 아주 도움이 됐어요~♡"','다니엘라: "……제 기분은 망했는데요."']
+];
+const v12WrongBranches=[
+ [
+  {match:/납치|유괴|인질/,line:'미겔: "제 얼굴을 납치하다니! 몸값은 얼마죠?! …아, 거울에 김이 서린 거였어요?"\n다니엘라: "……수증기한테 송금할 뻔했네요."'},
+  {match:/도둑|훔|절도/,line:'미겔: "제 미모를 훔칠 수 있는 도둑은 없죠~. 복제가 불가능하니까요♡"\n다니엘라: "……걸레로 닦으면 복구되는데요."'},
+  {match:/귀신|유령|악마/,line:'미겔: "귀신도 제 얼굴을 보고 놀라서 도망쳤겠죠~!"\n다니엘라: "……저도 도망치고 싶어요."'}
+ ],
+ [
+  {match:/귀신|유령|악마/,line:'미겔: "귀신이 과자를 먹었다고요? 그럼 귀신도 입가에 부스러기가 묻나요~?"\n다니엘라: "……아, 씨. 제 입 좀 보지 말라고요."'},
+  {match:/미겔|자작극/,line:'미겔: "제가 제 과자를 훔쳤다고요?! 제게 허락을 받으면 그건 절도가 아니죠~♡"\n다니엘라: "……말이 되는 소리만 해요."'},
+  {match:/쥐|고양이|동물/,line:'미겔: "동물은 방에 없었어요~! 두 사람뿐이었죠!"\n다니엘라: "……두 사람 중 하나를 짐승이라고 부르면 때립니다."'}
+ ],
+ [
+  {match:/도둑|훔|절도/,line:'미겔: "제 그림자를 훔치다니, 정말 안목이 좋은 범인이네요~♡"\n다니엘라: "……건물 그림자 안에 들어간 걸 범죄로 만들지 마요."'},
+  {match:/귀신|유령|악마|뱀파이어/,line:'미겔: "제 그림자가 없으면 제가 마왕이라는 뜻일까요? 에헤~♪"\n다니엘라: "……그늘에서 나오세요, 마왕님."'},
+  {match:/밤|해가 졌|일몰/,line:'미겔: "한낮이었다니까요~! 해가 그렇게 밝았는데!"\n다니엘라: "……밝아도 큰 건물 아래는 그늘져요."'}
+ ]
+];
+function v12SecretStore(){
+ if(!state.comedySecrets||typeof state.comedySecrets!=='object'||Array.isArray(state.comedySecrets))state.comedySecrets={};
+ const k=String(state.index);if(!Array.isArray(state.comedySecrets[k]))state.comedySecrets[k]=[];
+ return state.comedySecrets[k];
+}
+function v12Badge(){const el=$('secretCount');if(el)el.textContent=`숨은 대화 ${v12SecretStore().length} / ${v12SecretBranches[state.index].length}개 발견`}
+function v12Match(q){return v12SecretBranches[state.index].find(x=>x.match.test(q))}
+const v12Ask=ask;
+ask=function(q){
+ const before=state.count;v12Ask(q);if(state.count===before)return;
+ const last=state.history.at(-1);if(!last)return;
+ const special=v12Match(q);
+ const recognized=puzzles[state.index].rules.some(r=>r.keys.some(k=>q.toLowerCase().includes(k)));
+ let dialogue='';
+ if(special){
+  dialogue=`🎁 숨겨진 대화!\n미겔: "${special.miguel}"\n다니엘라: "${special.daniela}"`;
+  const secrets=v12SecretStore();if(!secrets.includes(special.id))secrets.push(special.id);
+ }else if(!recognized){
+  const pair=v12GenericBranches[(state.count-1)%v12GenericBranches.length];dialogue=pair.join('\n');
+ }
+ if(dialogue){last.comedyExtra=dialogue;save();$('dialogue').textContent=dialogue;const lastLine=$('history').lastElementChild;if(lastLine)lastLine.textContent+=`  /  ${dialogue.replace(/\n/g,' ')}`}
+ v12Badge();
+};
+const v12Render=render;
+render=function(){v12Render();v12Badge();const last=state.history.at(-1);if(last?.comedyExtra&&state.count<20)$('dialogue').textContent=last.comedyExtra};
+const v12Submit=submitAnswer;
+submitAnswer=function(){
+ const a=$('answer').value.trim();if(!a)return v12Submit();
+ v12Submit();if($('ending').classList.contains('hidden'))return;
+ const correct=$('endingIcon').textContent==='🌟';
+ const found=v12SecretStore().length;
+ let add='';
+ if(correct){
+  add=found>=2?'\n\n🎁 숨겨진 대화도 찾아냈네요!\n미겔: "네네~! 제 천재적인 문제와 여러분의 운이 합쳐진 결과죠♡"\n다니엘라: "……운이 아니라 제가 고생한 건데요."':'\n\n미겔: "맞혔다고 우쭐대지 마세요~! 문제를 낸 제가 제일 대단하거든요♡"\n다니엘라: "……그냥 입 다물고 다음 문제나 내요."';
+ }else{
+  const branch=v12WrongBranches[state.index].find(x=>x.match.test(a));
+  add='\n\n🎭 오답 특별 반응\n'+(branch?branch.line:[
+   '미겔: "에에~? 틀렸어요! 하지만 그 자신감만큼은 제 것을 닮았네요♡"\n다니엘라: "……칭찬 아닌 것 같은데요."',
+   '미겔: "자자~! 그 추리는 제 미모만큼 눈부셨지만, 정답은 아니랍니다♪"\n다니엘라: "……아무것도 안 보였단 뜻이군요."',
+   '미겔: "흐응~ 제 천재적인 설명을 듣고도 그 답이라니! 흑, 제가 너무 아름다운 탓인가요?"\n다니엘라: "……그냥 문제를 못 낸 거잖아요."'
+  ][(state.count+state.index)%3]);
+ }
+ $('endingText').textContent+=add;
+};
+// Previously completed episodes remain cleared; v0.12 does not reset or overwrite past data.
+
+
+// v0.13 · dialogue-directed comic staging. No save schema changes.
+(function(){
+ const bubble=document.querySelector('#game .bubble');
+ const scene=document.querySelector('#game .scene');
+ const cards=[...document.querySelectorAll('#game .character')];
+ const caption=document.createElement('div');
+ caption.className='comic-caption';
+ caption.hidden=true;
+ bubble.insertBefore(caption,$('speaker'));
+ let lastSignature='';
+ const cues={
+  panic:{label:'!! 대혼란 !!',face:'😭',act:'wobble',tone:'panic'},
+  angry:{label:'💢 인내심 한계',face:'😡',act:'jolt',tone:'angry'},
+  smug:{label:'✦ 근거 없는 자신감',face:'😏',act:'pop',tone:'smug'},
+  shock:{label:'?! 뭐라고요?!',face:'😱',act:'pop',tone:'shock'},
+  calm:{label:'♪ 잠깐만요',face:'🙂',act:'pop',tone:''}
+ };
+ function detect(line,who){
+  if(/으아|아아|흑|울|살려|죽|엉엉|아파|너무해|흐어|으앙/.test(line))return 'panic';
+  if(/씨발|미친|닥쳐|끊어요|부러뜨|짜증|꺼져|사과|젠장|개소리/.test(line))return 'angry';
+  if(/에엑|뭐라고|어라|기적|진짜|\?\!|!!|당황/.test(line))return 'shock';
+  if(who==='miguel'&&/천재|미모|아름|완벽|네네|흐응|자자|♡|♪/.test(line))return 'smug';
+  return 'calm';
+ }
+ function stage(force=false){
+  if(!$('game')||$('game').classList.contains('hidden'))return;
+  const raw=$('dialogue').textContent||'';
+  const sig=[state.index,state.count,raw].join('|');
+  if(!force&&sig===lastSignature)return;
+  lastSignature=sig;
+  const lines=raw.split('\n').filter(Boolean);
+  const d=lines.filter(x=>/다니엘라\s*:/.test(x)).at(-1);
+  const m=lines.filter(x=>/미겔\s*:/.test(x)).at(-1);
+  // When a two-character exchange ends, spotlight the last speaker.
+  const last=lines.findLast(x=>/^(?:미겔|다니엘라)\s*:/.test(x))||'';
+  const active=/^다니엘라\s*:/.test(last)?1:0;
+  const line=active===1?(d||last):(m||last||raw);
+  const tone=detect(line,active===1?'daniela':'miguel');
+  const cue=cues[tone];
+  cards.forEach((card,i)=>{
+   card.classList.remove('is-speaking','act-pop','act-wobble','act-jolt');
+   card.dataset.mood=i===active?tone:'calm';
+   if(i===active)card.classList.add('is-speaking');
+  });
+  bubble.classList.remove('act-bubble');
+  scene.classList.remove('act-shake');
+  bubble.dataset.tone=cue.tone;
+  caption.textContent=cue.label;
+  caption.hidden=false;
+  // Existing authored expressions are preserved; mood overlays only when emphatic.
+  if(tone!=='calm'&&tone!=='smug'){
+   $(active===0?'miguelFace':'danielFace').textContent=cue.face;
+  }
+  $(active===0?'miguelMood':'danielMood').textContent={
+   panic:'대성통곡',angry:'폭발 직전',smug:'자화자찬',shock:'충격',calm:'대화 중'
+  }[tone];
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  // Reflow once to replay on consecutive questions, no setTimeout needed.
+  void bubble.offsetWidth;
+  bubble.classList.add('act-bubble');
+  cards[active].classList.add('act-'+cue.act);
+  if(tone==='angry'||tone==='shock')scene.classList.add('act-shake');
+ }
+ const previousRender=render;
+ render=function(){previousRender();stage()};
+ const previousAsk=ask;
+ ask=function(q){previousAsk(q);stage(true)};
+ const previousStart=start;
+ start=function(resume=false){previousStart(resume);stage(true)};
+ const previousRestart=restart;
+ restart=function(){previousRestart();stage(true)};
+ // Ending gets a distinct comic presentation without altering answer evaluation.
+ const previousSubmit=submitAnswer;
+ submitAnswer=function(){previousSubmit();if(!$('ending').classList.contains('hidden')){
+   const success=$('endingIcon').textContent==='🌟';
+   $('endingIcon').textContent=success?'🎉':'💥';
+   $('endingTitle').style.letterSpacing='.04em';
+ }};
+ // Restore mood/face from current history after navigating back to an episode.
+ const previousView=view;
+ view=function(id){previousView(id);if(id==='game')stage(true)};
+})();
+
+</script></body></html>
